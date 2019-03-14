@@ -1,0 +1,23 @@
+<header class="bottomHeader col-lg-12">
+  <div class="col-lg-2" [routerLink]="['/dashboard/home']">
+    <img src="../assets/houses.png" height="85" width="85" />
+    <div class="logoHead">
+      <span class="greenHead">THE</span>
+      <span>HOUSE</span>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <ul class="headerList">
+        <li class="cursorPointer" [routerLink]="['/dashboard/home']" [routerLinkActive]="['is-active']">Home</li>
+        <li class="cursorPointer" [routerLink]="['/dashboard/property-buy']" [routerLinkActive]="['is-active']">Buy</li>
+        <li class="cursorPointer" [routerLink]="['/dashboard/property-rent']" [routerLinkActive]="['is-active']">Rent</li>
+        <li class="cursorPointer" [routerLink]="['/dashboard/property-pg']" [routerLinkActive]="['is-active']">PG</li>
+      <!-- <li class="cursorPointer" [routerLink]="['/dashboard/property']" [routerLinkActive]="['is-active']">Property</li> -->
+      <!-- <li class="cursorPointer" [routerLink]="['/dashboard/agents']" [routerLinkActive]="['is-active']">Agents</li> -->
+      <li class="cursorPointer" [routerLink]="['/dashboard/projects']" [routerLinkActive]="['is-active']">Projects</li>
+    </ul>
+  </div>
+  <div class="col-lg-4 text-right submitProp">
+    <button type="button" class="btn btn-success cursorPointer" (click)="goToSubmitProperty()"  [routerLinkActive]="['is-active-button']">Submit Property</button>
+  </div>
+</header>

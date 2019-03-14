@@ -1,0 +1,140 @@
+<div class="col-lg-4">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">My Profile</h3>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="showProfileData" class="loading"></div>
+            <div *ngIf="!showProfileData">
+                <div class="userImage text-center">
+                    <img src="../../assets/profile.png" height="120" />
+                </div>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item">{{username}}</li>
+                        <li class="list-group-item">{{mobile}}</li>
+                        <li class="list-group-item">{{email}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-8">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">Sale Property Posted</h3>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="showSalePropertyData" class="loading"></div>
+            <div *ngIf="!showSalePropertyData">
+                <div *ngIf="saleProperties.length > 0">
+                    <div class="col-lg-6" *ngFor="let data of saleProperties;let i = index">
+                            <div class="col-lg-12 borderPossible">
+                        <div class="col-lg-6">
+                            <img src="../../assets/bunglow.jpg" height="90" width="160" />
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <strong>Caption :</strong> {{data.propertyCaption}}
+                            </div>
+                            <div>
+                                <strong>Posted on :</strong> {{data.date}}
+                            </div>
+                            <div>
+                                <strong>Society :</strong> {{data.societyName}}
+                            </div>
+                            <div>
+                                <strong>Property Visits :</strong> {{data.visits || 0}}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="saleProperties.length == 0">
+                    No Property posted by you
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-6">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">Rent Property Posted</h3>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="showRentPropertyData" class="loading"></div>
+            <div *ngIf="!showRentPropertyData">
+                <div *ngIf="rentProperties.length > 0">
+                    <div class="col-lg-6 " *ngFor="let data of rentProperties;let i = index">
+                            <div class="col-lg-12 borderPossible">
+                        <div class="col-lg-6">
+                            <img src="../../assets/bunglow.jpg" height="90" width="160" />
+                        </div>
+                        <div class="col-lg-6">
+                            <div>
+                                <strong>Caption :</strong> {{data.propertyCaption}}
+                            </div>
+                            <div>
+                                <strong>Posted on :</strong> {{data.date}}
+                            </div>
+                            <div>
+                                <strong>Society :</strong> {{data.societyName}}
+                            </div>
+                            <div>
+                                <strong>Property Visits :</strong> {{data.visits || 0}}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="rentProperties.length == 0">
+                    No Property posted by you
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-lg-6">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">PG Posted</h3>
+        </div>
+        <div class="panel-body">
+            <div *ngIf="showPgPropertyData" class="loading"></div>
+            <div *ngIf="!showPgPropertyData">
+                <div *ngIf="pgProperties.length > 0">
+                    <div class="col-lg-6 margin-bottom-20" *ngFor="let data of pgProperties;let i = index">
+                        <div class="col-lg-12 borderPossible">
+                        <div class="col-lg-12">
+                            <img src="../../assets/bunglow.jpg" height="90" width="200" />
+                        </div>
+                        <div class="col-lg-12">
+                            <div>
+                                <strong>Caption :</strong> {{data.propertyCaption}}
+                            </div>
+                            <div>
+                                <strong>Posted on :</strong> {{data.date}}
+                            </div>
+                            <div>
+                                <strong>Available For :</strong> {{data.pgAvailableFor}}
+                            </div>
+                            <div>
+                                <strong>Property Visits :</strong> {{data.visits || 0}}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div *ngIf="pgProperties.length == 0">
+                    No PG posted by you
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

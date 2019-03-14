@@ -1,0 +1,37 @@
+*{
+    outline: none;
+}
+.bottomHeader {
+    background-color: #ffffff;
+}
+.headerList li{
+    display: inline-block;
+    font-size: 20px;
+    padding:35px 25px;
+}
+.logoHead{
+    font-weight: bold;
+    font-size: 20px;
+    display: inline;
+    top: 15px;
+    position: relative;
+}
+.greenHead{
+    color: #95c41f;
+}
+.submitProp .btn-success{
+    margin: 40px 0px 0px 0px; 
+    color: #95c41f;
+    background-color: #ffffff;
+    border-color: #95c41f;
+    padding: 5px 25px;
+    font-size: 20px;
+}
+.is-active{
+    color:#95c41f;
+    border-top: 5px solid #95c41f;
+}
+.btn-success.is-active-button {
+    background-color:#95c41f !important;
+    color:white !important;
+}

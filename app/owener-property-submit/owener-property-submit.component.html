@@ -1,0 +1,831 @@
+<div>
+  <form #propertyForm="ngForm">
+    <div class="col-lg-12">
+      <div class="input-group col-lg-4">
+        <span class="input-group-addon">Name</span>
+        <input type="text" class="form-control" [(ngModel)]="username" name="name" placeholder="Eg: John" disabled>
+      </div>
+      <div class="input-group col-lg-4">
+        <span class="input-group-addon">Email</span>
+        <input type="text" class="form-control" [(ngModel)]="email" name="email" placeholder="Eg: example@example.com" disabled>
+      </div>
+      <div class="input-group col-lg-4">
+        <span class="input-group-addon">Mobile</span>
+        <input type="text" class="form-control" [(ngModel)]="mobile" name="mobile" placeholder="Eg: 0000000000" disabled>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <div>
+        <h3>Property Details</h3>
+        <div>
+          <div>
+            <div class="form-check">
+              <label>
+                For :
+              </label>
+            </div>
+            <div class="form-check">
+              <label>
+                <input type="radio" name="radio" value="sale" [(ngModel)]="propertyFor" (click)="setFor('sale')">
+                <span class="label-text">Sale</span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label>
+                <input type="radio" name="radio" value="rent" [(ngModel)]="propertyFor" (click)="setFor('rent')">
+                <span class="label-text">Rent</span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label>
+                <input type="radio" name="radio" value="pg" [(ngModel)]="propertyFor" (click)="setFor('pg')">
+                <span class="label-text">PG</span>
+              </label>
+            </div>
+            <div class="col-lg-12 noPadding">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Property Type</span>
+                <select class="form-control" name="propTypes" [(ngModel)]="selectedPropertyType" *ngIf="propertyFor != 'pg'">
+                  <option *ngFor="let i of propertyTypes" [ngValue]="i.id">{{i.name}}</option>
+                </select>
+                <input *ngIf="propertyFor == 'pg'" type="text" class="form-control" name="pgPropFor" disabled placeholder="PG">
+              </div>
+            </div>
+
+            <div class="col-lg-12 noPadding">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Caption</span>
+                <input type="text" #propertyCaption="ngModel" class="form-control" required [(ngModel)]="caption" name="propCaption" placeholder="Eg: Beautiful 3BHK Flat">
+              </div>
+              <div *ngIf="propertyCaption.touched && propertyCaption.invalid" class="red">
+                <div *ngIf="propertyCaption.errors.required">* Caption is Mandatory </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12">
+      <div>
+        <h3>Property Location</h3>
+        <div>
+          <div>
+            <div class="col-lg-12 noPadding">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Locality</span>
+                <input type="text" class="form-control" #propertyLoc="ngModel" required [(ngModel)]="selectedpropertyLocation" name="propLocation"
+                  placeholder="Eg: Geeta Bhavan">
+              </div>
+              <div *ngIf="propertyLoc.touched && propertyLoc.invalid" class="red">
+                <div *ngIf="propertyLoc.errors.required">* Location is Mandatory </div>
+              </div>
+            </div>
+            <div class="col-lg-12 noPadding">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon" *ngIf="!pg">Society Name</span>
+                <span class="input-group-addon" *ngIf="pg">PG Name</span>
+                <input type="text" class="form-control" #societyNameProp="ngModel" [(ngModel)]="societyName" name="societyName" placeholder="Eg: NRK"
+                  required>
+              </div>
+              <div *ngIf="societyNameProp.touched && societyNameProp.invalid" class="red">
+                <div *ngIf="societyNameProp.errors.required">* Society Name is Mandatory </div>
+              </div>
+            </div>
+            <div class="col-lg-12 noPadding">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Address</span>
+                <input type="text" class="form-control" #addressOfProp="ngModel" required [(ngModel)]="address" name="Address" placeholder="Eg: Geeta bhavan Road">
+              </div>
+              <div *ngIf="addressOfProp.touched && addressOfProp.invalid" class="red">
+                <div *ngIf="addressOfProp.errors.required">* Address is Mandatory </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-12">
+      <div>
+        <h3>Property Features</h3>
+        <div>
+          <div>
+            <div class="col-lg-12 noPadding" *ngIf="!pg">
+              <div class="form-group col-lg-4 noPadding">
+                <div class="form-check">
+                  <label>
+                    Bedrooms :
+                  </label>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn" [ngClass]="[setBedroomTo === i ? 'btn-primary' : '']" (click)="selectBedrooms(i)" *ngFor="let i of bedrooms">{{i}}</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 noPadding" *ngIf="!pg">
+              <div class="form-group col-lg-4 noPadding">
+                <div class="form-check">
+                  <label>
+                    Balconies :
+                  </label>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="btn" [ngClass]="[setBalconiesTo === i ? 'btn-primary' : '']" (click)="selectBalconies(i)" *ngFor="let i of bedrooms">{{i}}</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 noPadding">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Total Floors</span>
+                <input type="text" class="form-control" #totalFloorsReq="ngModel" required [(ngModel)]="totalFloors" name="Total Floor" placeholder="Total Floors">
+              </div>
+              <div *ngIf="totalFloorsReq.touched && totalFloorsReq.invalid" class="red">
+                <div *ngIf="totalFloorsReq.errors.required">* Total Floor is Mandatory </div>
+              </div>
+            </div>
+            <div class="col-lg-12 noPadding">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Your Floor</span>
+                <input type="text" class="form-control" #yourFloorsReq="ngModel" required [(ngModel)]="selectedFloor" name="Selected Floor"
+                  placeholder="Your Floor">
+              </div>
+
+              <div *ngIf="yourFloorsReq.touched && yourFloorsReq.invalid" class="red">
+                <div *ngIf="yourFloorsReq.errors.required">* Floor is Mandatory </div>
+              </div>
+
+            </div>
+
+            <div class="col-lg-12 noPadding">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Parking Status</span>
+                <select class="form-control" [(ngModel)]="parking" name="parking">
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-lg-4 noPadding" *ngIf="!pg">
+              <div class="form-check">
+                <label>
+                  Furnished Status :
+                </label>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn" [ngClass]="[setFurnishedStatus === i ? 'btn-primary' : '']" (click)="selectFurnished(i)"
+                  *ngFor="let i of furnishedStatus">{{i}}</button>
+              </div>
+            </div>
+
+            <div class="col-lg-12 noPadding" *ngIf="!pg">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Bathrooms</span>
+                <input type="text" class="form-control" #bathroomReq="ngModel" required [(ngModel)]="bathroomsCount" name="bathrooms" placeholder="Eg: 2">
+              </div>
+              <div *ngIf="bathroomReq.touched && bathroomReq.invalid" class="red">
+                <div *ngIf="bathroomReq.errors.required">* Enter no. of bathrooms </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 noPadding" *ngIf="sale">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Construction Allowed</span>
+                <select class="form-control" [(ngModel)]="constructionAllowed" name="construction">
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-12 noPadding" *ngIf="sale">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Open Sides</span>
+                <select class="form-control" [(ngModel)]="openSides" name="openSide">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-12 noPadding" *ngIf="pg">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Available For</span>
+                <select class="form-control" [(ngModel)]="pgAvailableFor" name="availFor">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="both">Both</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-12 noPadding" *ngIf="pg">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Occupancy</span>
+                <select class="form-control" [(ngModel)]="pgOccupancy" name="occupancy">
+                  <option value="single">Single</option>
+                  <option value="sharing">Sharing</option>
+                  <option value="both">Both</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-12 noPadding" *ngIf="pg">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">PG Age</span>
+                <select class="form-control" [(ngModel)]="pgAge" name="age">
+                  <option value="0">0 years</option>
+                  <option value="1">1 years</option>
+                  <option value="2">2 years</option>
+                  <option value="3">3 years</option>
+                  <option value="4">4 years</option>
+                  <option value="5">5 years</option>
+                  <option value="6">6 years</option>
+                  <option value="7">7 years</option>
+                  <option value="8">8 years</option>
+                  <option value="9">9 years</option>
+                  <option value="10">10 years</option>
+                  <option value="11">10+ years</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-12 noPadding" *ngIf="pg">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Prefered tenant</span>
+                <select class="form-control" [(ngModel)]="pgtenants" name="pgtent">
+                  <option value="1">Student</option>
+                  <option value="2">Professionals</option>
+                  <option value="3">Both</option>
+                </select>
+              </div>
+            </div>
+
+
+
+            <div class="col-lg-12 noPadding" *ngIf="pg">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Bathroom</span>
+                <select class="form-control" [(ngModel)]="pgBathroom" name="pgBath">
+                  <option value="1">Attached</option>
+                  <option value="2">Outside</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-12 noPadding" *ngIf="pg">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Balcony</span>
+                <select class="form-control" [(ngModel)]="pgBalcony" name="pgBalconies">
+                  <option value="1">Attached</option>
+                  <option value="2">Outside</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-12 noPadding" *ngIf="pg">
+              <div class="input-group col-lg-4">
+                <span class="input-group-addon">Common Area</span>
+                <select class="form-control" [(ngModel)]="pgCommonArea" name="pgCommonArea">
+                  <option value="1">Yes</option>
+                  <option value="2">No</option>
+                </select>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-lg-12" *ngIf="!pg">
+      <div>
+        <h3>Property Area</h3>
+        <div>
+          <div class="col-lg-12 noPadding">
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">Covered Area</span>
+              <input type="text" class="form-control" #covArea="ngModel" required [(ngModel)]="propertyCoveredArea" name="Covered Area"
+                placeholder="Eg: 1200">
+              <select class="form-control" name="propunitCoverdara" [(ngModel)]="propertyCoveredAreaUnit">
+                <option value="ft">Sq-ft</option>
+                <option value="m">Sq-m</option>
+              </select>
+            </div>
+
+            <div *ngIf="covArea.touched && covArea.invalid" class="red">
+              <div *ngIf="covArea.errors.required">* Enter Covered Area </div>
+            </div>
+
+
+          </div>
+
+          <div class="col-lg-12 noPadding">
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">Carpet Area</span>
+              <input type="text" class="form-control" #carpArea="ngModel" required [(ngModel)]="propertyCarpetArea" name="Carpet Area"
+                placeholder="Eg: 1330">
+              <select class="form-control" name="propunitCarpetara" [(ngModel)]="propertyCarpetAreaUnit">
+                <option value="ft">Sq-ft</option>
+                <option value="m">Sq-m</option>
+              </select>
+            </div>
+
+            <div *ngIf="carpArea.touched && carpArea.invalid" class="red">
+              <div *ngIf="carpArea.errors.required">* Enter Covered Area </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-12" *ngIf="!pg">
+      <div>
+        <h3>Property Availability</h3>
+        <div *ngIf="sale">
+          <div class="form-check">
+            <label>
+              Type :
+            </label>
+          </div>
+          <div class="form-check">
+            <label>
+              <input type="radio" name="radio1" value="new" [(ngModel)]="propertyAvailabilityType" (click)="setPropertyAvailabilityType('new');return">
+              <span class="label-text">New</span>
+            </label>
+          </div>
+          <div class="form-check">
+            <label>
+              <input type="radio" name="radio1" value="resale" [(ngModel)]="propertyAvailabilityType" (click)="setPropertyAvailabilityType('resale');return">
+              <span class="label-text">Resale</span>
+            </label>
+          </div>
+        </div>
+
+        <div *ngIf="rent">
+          <div class="form-check">
+            <label>
+              Available From :
+            </label>
+          </div>
+          <div class="form-check">
+            <label>
+              <input type="radio" name="radio4" value="date" [(ngModel)]="availableFromForRent">
+              <span class="label-text">Date</span>
+            </label>
+          </div>
+          <div class="form-check">
+            <label>
+              <input type="radio" name="radio4" value="immediate" [(ngModel)]="availableFromForRent">
+              <span class="label-text">Immediately</span>
+            </label>
+          </div>
+
+          <div class="col-lg-12 noPadding" *ngIf="availableFromForRent == 'date'">
+            <div class="input-group col-lg-4">
+              <!-- <span class="input-group-addon">Available From</span>
+            <select class="form-control" [(ngModel)]="rentPropAvailableDay">
+              <option [ngValue]="i" *ngFor="let i of days">{{i}}</option>
+            </select>
+            <select class="form-control" [(ngModel)]="rentPropAvailableMonth">
+              <option [ngValue]="i" *ngFor="let i of months">{{i}}</option>
+            </select>
+            <select class="form-control" [(ngModel)]="rentPropAvailableYear">
+              <option [ngValue]="i" *ngFor="let i of years">{{i}}</option>
+            </select> -->
+              <div>
+                <label>
+                  Available From
+                </label>
+              </div>
+              <my-date-picker class="datePickerCss" name="mydateRent" [options]="myDatePickerOptions" [(ngModel)]="rentPropAvailability"
+                required (dateChanged)="onDateChanged($event)">
+              </my-date-picker>
+
+            </div>
+          </div>
+
+
+        </div>
+
+        <div *ngIf="sale">
+          <div class="form-check">
+            <label>
+              Status :
+            </label>
+          </div>
+          <div class="form-check">
+            <label>
+              <input type="radio" name="radio2" value="underconstruction" [(ngModel)]="propertyStatus">
+              <span class="label-text">Under Construction</span>
+            </label>
+          </div>
+          <div class="form-check">
+            <label>
+              <input type="radio" name="radio2" value="readytomove" [(ngModel)]="propertyStatus">
+              <span class="label-text">Ready to move</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-lg-12 noPadding" *ngIf="rent">
+          <div class="input-group col-lg-4">
+            <span class="input-group-addon">Age Of Construction</span>
+
+            <select class="form-control" name="ageofConstr" [(ngModel)]="ageOfConstruction">
+              <option [ngValue]="i" *ngFor="let i of ['0 years','1 year','2 year','3 year','4 year','5 year','6 year','7 year','8 year','9 year','10 year','10+ year']">{{i}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-lg-12 noPadding" *ngIf="propertyStatus !== 'underconstruction' && propertyStatus && sale">
+          <div class="input-group col-lg-4">
+            <span class="input-group-addon">Age Of Construction</span>
+            <select class="form-control" name="ageofConstr" [(ngModel)]="ageOfConstruction">
+              <option [ngValue]="i" *ngFor="let i of ['0 years','1 year','2 year','3 year','4 year','5 year','6 year','7 year','8 year','9 year','10 year','10+ year']">{{i}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-lg-12 noPadding" *ngIf="propertyStatus === 'underconstruction' && propertyStatus && sale">
+          <div class="input-group col-lg-4">
+            <div>
+              <label>
+                Available From
+              </label>
+            </div>
+            <!-- <span class="input-group-addon">Available From</span> -->
+            <!-- <select class="form-control" [(ngModel)]="salePropAvailableMonth">
+            <option [ngValue]="i" *ngFor="let i of months">{{i}}</option>
+          </select>
+          <select class="form-control" [(ngModel)]="salePropAvailableYear">
+            <option [ngValue]="i" *ngFor="let i of years">{{i}}</option>
+          </select> -->
+            <my-date-picker class="datePickerCss" name="mydate" [options]="myDatePickerOptions" [(ngModel)]="salePropAvailability" required
+              (dateChanged)="onDateChanged($event)">
+
+            </my-date-picker>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-12" *ngIf="pg">
+      <div>
+        <h3>Furnishing</h3>
+        <div class="col-lg-4">
+          <div class="form-check" *ngFor="let test of pgFurnishing">
+            <label>
+              <input type="checkbox" name="check" [(ngModel)]="test.selected">
+              <span class="label-text">{{test.name}}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12">
+      <div>
+        <h3 *ngIf="sale">Property Price</h3>
+        <h3 *ngIf="rent || pg">Rent</h3>
+        <div>
+          <div class="col-lg-12 noPadding">
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">Expected Price</span>
+              <input type="text" class="form-control" #expectedPrice="ngModel" required name="expPrice" [(ngModel)]="propertyPrice" placeholder="Amount">
+            </div>
+
+            <div *ngIf="expectedPrice.touched && expectedPrice.invalid" class="red">
+              <div *ngIf="expectedPrice.errors.required">* Expected Price is Mandatory </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 noPadding">
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">Maintainance (Monthly)</span>
+              <input type="text" class="form-control" #maintPrice="ngModel" required name="maintainance" [(ngModel)]="propertyMainPrice"
+                placeholder="Maintainance">
+            </div>
+            <div *ngIf="maintPrice.touched && maintPrice.invalid" class="red">
+              <div *ngIf="maintPrice.errors.required">* Maintainance is Mandatory </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 noPadding" *ngIf="!pg">
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">Other Charges</span>
+              <input type="text" class="form-control" name="charges" [(ngModel)]="propertyOtherPrice" placeholder="Other Charges">
+            </div>
+          </div>
+
+          <div class="col-lg-12 noPadding" *ngIf="pg">
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">Electricity</span>
+              <input type="text" class="form-control" name="ElectCharges" [(ngModel)]="propertyElectricityPrice" placeholder="Electricity Charges">
+            </div>
+          </div>
+
+          <div class="col-lg-12 noPadding" *ngIf="pg">
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">Laundary</span>
+              <input type="text" class="form-control" name="laundry" [(ngModel)]="laundryCharges" placeholder="Laundary Charges">
+            </div>
+          </div>
+
+          <div class="col-lg-12 noPadding" *ngIf="pg">
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">Security</span>
+              <input type="text" #securityDepo="ngModel" required class="form-control" name="security" [(ngModel)]="securityCharges" placeholder="Security Deposit">
+            </div>
+            <div *ngIf="securityDepo.touched && securityDepo.invalid" class="red">
+              <div *ngIf="securityDepo.errors.required">* Security Deposite is Mandatory </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 noPadding" *ngIf="pg">
+            <div class="input-group col-lg-4">
+              <span class="input-group-addon">Notice Period</span>
+              <select class="form-control" [(ngModel)]="noticePeriod" name="notice1">
+                <option vlaue="0" selected>No</option>
+                <option vlaue="1">1 month</option>
+                <option vlaue="2">2 month</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-12 noPadding red" *ngIf="sale">
+            **Stamp Duty & Registration charges are excluded.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 propertyPics" *ngIf="!pg">
+      <div>
+        <h3>Property Photos</h3>
+        <div>
+          <span class="red">**Photos are not mandatory but makes your property more visible</span>
+        </div>
+        <form [formGroup]="form">
+          <table>
+            <tr>
+              <th>Upload</th>
+              <th>Preview</th>
+              <th>Upload</th>
+              <th>Preview</th>
+            </tr>
+            <tr>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="filePickerMain.click()">+Image</button>
+                <input type="file" name="image" #filePickerMain (change)="onImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+                  <img [src]="imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="bedroom1Image.click()">+Bedroom 1</button>
+                <input type="file" name="image" #bedroom1Image (change)="bedroom1ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="beedroom1imagePreview !== '' && beedroom1imagePreview && form.get('bedroom1').valid">
+                  <img [src]="beedroom1imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="bedroom2Image.click()">+Bedroom 2</button>
+                <input type="file" name="image" #bedroom2Image (change)="bedroom2ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="beedroom2imagePreview !== '' && beedroom2imagePreview && form.get('bedroom2').valid">
+                  <img [src]="beedroom2imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="bedroom3Image.click()">+Bedroom 3</button>
+                <input type="file" name="image" #bedroom3Image (change)="bedroom3ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="beedroom3imagePreview !== '' && beedroom3imagePreview && form.get('bedroom3').valid">
+                  <img [src]="beedroom3imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="bathroom1Image.click()">+Bathroom 1</button>
+                <input type="file" name="image" #bathroom1Image (change)="bathroom1ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="bathroom1imagePreview !== '' && bathroom1imagePreview && form.get('bathroom1').valid">
+                  <img [src]="bathroom1imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="bathroom2Image.click()">+Bathroom 2</button>
+                <input type="file" name="image" #bathroom2Image (change)="bathroom2ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="bathroom2imagePreview !== '' && bathroom2imagePreview && form.get('bathroom2').valid">
+                  <img [src]="bathroom2imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="bathroom3Image.click()">+Bathroom 3</button>
+                <input type="file" name="image" #bathroom3Image (change)="bathroom3ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="bathroom3imagePreview !== '' && bathroom3imagePreview && form.get('bathroom3').valid">
+                  <img [src]="bathroom3imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="balcony1Image.click()">+Balcony 1</button>
+                <input type="file" name="image" #balcony1Image (change)="balcony1ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="balcony1imagePreview !== '' && balcony1imagePreview && form.get('balcony1').valid">
+                  <img [src]="balcony1imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="balcony2Image.click()">+Balcony 2</button>
+                <input type="file" name="image" #balcony2Image (change)="balcony2ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="balcony2imagePreview !== '' && balcony2imagePreview && form.get('balcony2').valid">
+                  <img [src]="balcony2imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="hallImage.click()">+Hall</button>
+                <input type="file" name="image" #hallImage (change)="hallImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="hallimagePreview !== '' && hallimagePreview && form.get('hall').valid">
+                  <img [src]="hallimagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="kitchenImage.click()">+Kitchen</button>
+                <input type="file" name="image" #kitchenImage (change)="kitchenImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="kitchenimagePreview !== '' && kitchenimagePreview && form.get('kitchen').valid">
+                  <img [src]="kitchenimagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+
+
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="extraImage.click()">+Extra</button>
+                <input type="file" name="image" #extraImage (change)="extraImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="extraimagePreview !== '' && extraimagePreview && form.get('extra').valid">
+                  <img [src]="extraimagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+
+
+
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+
+    <!--  -->
+
+    <div class="col-lg-12 propertyPics" *ngIf="pg">
+      <div>
+        <h3>Property Photos</h3>
+        <div>
+          <span class="red">**Photos are not mandatory but makes your property more visible</span>
+        </div>
+        <form [formGroup]="form">
+          <table>
+            <tr>
+              <th>Upload</th>
+              <th>Preview</th>
+              <th>Upload</th>
+              <th>Preview</th>
+            </tr>
+            <tr>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="filePickerMain.click()">+Image</button>
+                <input type="file" name="image" #filePickerMain (change)="onImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+                  <img [src]="imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="bedroom1Image.click()">+Bedroom 1</button>
+                <input type="file" name="image" #bedroom1Image (change)="bedroom1ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="beedroom1imagePreview !== '' && beedroom1imagePreview && form.get('bedroom1').valid">
+                  <img [src]="beedroom1imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="bathroom1Image.click()">+Bathroom 1</button>
+                <input type="file" name="image" #bathroom1Image (change)="bathroom1ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="bathroom1imagePreview !== '' && bathroom1imagePreview && form.get('bathroom1').valid">
+                  <img [src]="bathroom1imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="balcony1Image.click()">+Balcony 1</button>
+                <input type="file" name="image" #balcony1Image (change)="balcony1ImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="balcony1imagePreview !== '' && balcony1imagePreview && form.get('balcony1').valid">
+                  <img [src]="balcony1imagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="kitchenImage.click()">+Extra</button>
+                <input type="file" name="image" #kitchenImage (change)="kitchenImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="kitchenimagePreview !== '' && kitchenimagePreview && form.get('kitchen').valid">
+                  <img [src]="kitchenimagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+
+
+              <td class="col-lg-2">
+                <button type="button" class="btn btn-success" (click)="extraImage.click()">+Extra</button>
+                <input type="file" name="image" #extraImage (change)="extraImagePicked($event)">
+              </td>
+              <td class="col-lg-4">
+                <div class="image-preview" *ngIf="extraimagePreview !== '' && extraimagePreview && form.get('extra').valid">
+                  <img [src]="extraimagePreview" [alt]="form.value.title">
+                </div>
+              </td>
+
+
+
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+
+    <!--  -->
+
+
+    <div class="col-lg-12 propertyPics">
+      <div>
+        <h3>Property Description</h3>
+        <div>
+          <textarea class="form-control" name="desc" rows="10" id="comment" [(ngModel)]="propertyDesc"></textarea>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-12 margin-top-20 margin-bottom-20">
+      <div class="agreeToPost">
+        <label>
+          <input type="checkbox" name="check" [(ngModel)]="agreeToPost" [checked]="agreeToPost" (change)="agreeToPost = !agreeToPost">
+          <span class="label-text">Agree to Post</span>
+        </label>
+      </div>
+    </div>
+    <div class="col-lg-12 margin-bottom-20">
+      <button class="btn btn-success col-lg-3" (click)="saveProperty()" [disabled]="!propertyForm.form.valid">
+        Continue
+      </button>
+    </div>
+  </form>
+</div>
